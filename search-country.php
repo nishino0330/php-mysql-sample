@@ -71,18 +71,21 @@ mysqli_close($link);
 ?>
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Hello, world!</title>
-  </head>
-  <body>
-    <form class="container" method = "POST" action = "./search-country.php">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <title>Hello, world!</title>
+</head>
+
+<body>
+  <form class="container" method="POST" action="./search-country.php">
     <div class="row mb-3">
       <label for="name" class="col-sm-2 col-form-label">Name</label>
       <div class="col-sm-10">
@@ -98,69 +101,92 @@ mysqli_close($link);
     <div class="row mb-3">
       <label for="indepyear_min" class="col-sm-2 col-form-label">IndepYear</label>
       <div class="col-sm-10">
-      <div class="input-group">
-          <input type="number" class="form-control" id="indepyear_min"  value="<?php echo $indepyear_min; ?>">
+        <div class="input-group">
+          <input type="number" class="form-control" id="indepyear_min" name="indepyear_min"
+            value="<?php echo $indepyear_min; ?>">
           <div class="input-group-text">~</div>
-          <input type="number" class="form-control" id="indepyear_max"  value="<?php echo $indepyear_max; ?>">
+          <input type="number" class="form-control" id="indepyear_max" name="indepyear_max"
+            value="<?php echo $indepyear_max; ?>">
         </div>
-    </div>    
+      </div>
+    </div>
     <div class="row mb-3">
       <label for="SurfaceArea_min" class="col-sm-2 col-form-label">SurfaceArea</label>
       <div class="col-sm-10">
-      <div class="input-group">
-          <input type="number" step="0.01" class="form-control" id="SurfaceArea_min"  value="<?php echo $SurfaceArea_min; ?>">
+        <div class="input-group">
+          <input type="number" step="0.01" class="form-control" id="SurfaceArea_min" name="SurfaceArea_min"
+            value="<?php echo $SurfaceArea_min; ?>">
           <div class="input-group-text">~</div>
-          <input type="number" step="0.01" class="form-control" id="SurfaceArea_max"  value="<?php echo $SurfaceArea_max; ?>">
+          <input type="number" step="0.01" class="form-control" id="SurfaceArea_max" name="SurfaceArea_max"
+            value="<?php echo $SurfaceArea_max; ?>">
         </div>
+      </div>
     </div>
     <div class="row mb-3">
       <label for="Continent" class="col-sm-2 col-form-label">Continent</label>
       <div class="col-sm-10">
-        <select class="form-select " id="continent" name="continent">                 
-        <option <?php if( $continent === '' ) echo 'selected'; ?> value>Open this select menu</option>
-        <option <?php if( $continent === 'Asia' ) echo 'selected'; ?> value="Asia">Asia</option>
-        <option <?php if( $continent === 'Europe' ) echo 'selected'; ?> value="Europe">Europe</option>
-        <option <?php if( $continent === 'North America' ) echo 'selected'; ?> value="North America">North America</option>
-        <option <?php if( $continent === 'Africa' ) echo 'selected'; ?> value="Africa">Africa</option>
-        <option <?php if( $continent === 'Oceania' ) echo 'selected'; ?> value="Oceania">Oceania</option>
-        <option <?php if( $continent === 'Anterctica' ) echo 'selected'; ?> value="Anterctica">Anterctica</option>
-        <option <?php if( $continent === 'South America' ) echo 'selected'; ?> value="South America">South America</option>
+        <select class="form-select " id="continent" name="continent">
+          <option <?php if( $continent==='' ) echo 'selected' ; ?> value>Open this select menu</option>
+          <option <?php if( $continent==='Asia' ) echo 'selected' ; ?> value="Asia">Asia</option>
+          <option <?php if( $continent==='Europe' ) echo 'selected' ; ?> value="Europe">Europe</option>
+          <option <?php if( $continent==='North America' ) echo 'selected' ; ?> value="North America">North America
+          </option>
+          <option <?php if( $continent==='Africa' ) echo 'selected' ; ?> value="Africa">Africa</option>
+          <option <?php if( $continent==='Oceania' ) echo 'selected' ; ?> value="Oceania">Oceania</option>
+          <option <?php if( $continent==='Anterctica' ) echo 'selected' ; ?> value="Anterctica">Anterctica</option>
+          <option <?php if( $continent==='South America' ) echo 'selected' ; ?> value="South America">South America
+          </option>
         </select>
       </div>
-    </div>    
+    </div>
     <button type="submit" class="btn btn-primary" name="submit" value="search">検索</button>
-    </form>
+  </form>
   <table class="table">
     <thead>
-          <th>Code</th>
-          <th>Name</th>
-          <th>Continent</th>
-          <th>Region</th>
-          <th>SurfaceArea</th>
-          <th>IndepYear</th>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Continent</th>
+      <th>Region</th>
+      <th>SurfaceArea</th>
+      <th>IndepYear</th>
     </thead>
-        <tbody>
-         <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-            <tr>
-                <td><?php echo $row[ 'Code' ]; ?></td>
-                <td><?php echo $row[ 'Name']; ?></td>
-                <td><?php echo $row[ 'Continent' ]; ?></td>
-                <td><?php echo $row[ 'Region' ]; ?></td>
-                <td><?php echo $row[ 'SurfaceArea' ]; ?></td>
-                <td><?php echo $row[ 'Indepyear' ]; ?></td>
-            </tr>
-        <?php } ?>
-         </tbody>
-    </table>
-    <!-- Optional JavaScript; choose one of the two! -->
+    <tbody>
+      <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+      <tr>
+        <td>
+          <?php echo $row[ 'Code' ]; ?>
+        </td>
+        <td>
+          <?php echo $row[ 'Name']; ?>
+        </td>
+        <td>
+          <?php echo $row[ 'Continent' ]; ?>
+        </td>
+        <td>
+          <?php echo $row[ 'Region' ]; ?>
+        </td>
+        <td>
+          <?php echo $row[ 'SurfaceArea' ]; ?>
+        </td>
+        <td>
+          <?php echo $row[ 'Indepyear' ]; ?>
+        </td>
+      </tr>
+      <?php } ?>
+    </tbody>
+  </table>
+  <!-- Optional JavaScript; choose one of the two! -->
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+  <!--
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
-    </body>
+</body>
+
 </html
